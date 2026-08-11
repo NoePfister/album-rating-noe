@@ -2,3 +2,4 @@ backend/node_modules/
 
 backend/database.db-wal
 backend/database.db-shm
+backend/package-lock.json
