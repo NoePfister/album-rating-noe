@@ -55,7 +55,8 @@ db.exec(`
         title TEXT NOT NULL,
         artist TEXT NOT NULL,
         image_path TEXT NOT NULL,
-        created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        released_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
     CREATE TABLE IF NOT EXISTS reviews (
@@ -110,51 +111,58 @@ function seedDatabase() {
                 title,
                 artist,
                 image_path,
-                created_at
+                created_at,
+                released_at
             )
-            VALUES (?, ?, ?, ?)
+            VALUES (?, ?, ?, ?,?)
         `);
 
         insertAlbum.run(
             "In Rainbows",
             "Radiohead",
             "/images/in-rainbows.jpg",
-            "2026-08-01 10:00:00"
+            "2026-08-01 10:00:00",
+            "2001-11-09 10:00:00"
         );
 
         insertAlbum.run(
             "Random Access Memories",
             "Daft Punk",
             "/images/random-access-memories.jpg",
-            "2026-08-02 10:00:00"
+            "2026-08-02 10:00:00",
+            "2001-11-09 10:00:00"
         );
 
         insertAlbum.run(
             "To Pimp a Butterfly",
             "Kendrick Lamar",
             "/images/to-pimp-a-butterfly.jpg",
-            "2026-08-03 10:00:00"
+            "2026-08-03 10:00:00",
+            "2001-11-09 10:00:00"
         );
 
         insertAlbum.run(
             "Whatever People Say I Am, That's What I'm Not",
             "Arctic Monkeys",
             "/images/whatever-people-say-i-am.jpg",
-            "2026-08-04 10:00:00"
+            "2026-08-04 10:00:00",
+            "2001-11-09 10:00:00"
         );
 
         insertAlbum.run(
             "Brat",
             "Charli XCX",
             "/images/brat.png",
-            "2026-08-05 10:00:00"
+            "2026-08-05 10:00:00",
+            "2001-11-09 10:00:00"
         );
 
         insertAlbum.run(
             "Blue Island",
             "Ravyn Lenae",
             "/images/1842519-blue-island_160551.jpg",
-            "2026-08-05 10:00:00"
+            "2026-08-05 10:00:00",
+            "2001-11-09 10:00:00"
         )
 
         console.log("✅ Beispielalben wurden eingefügt.");
@@ -279,6 +287,7 @@ app.get("/api/albums", (req, res) => {
                 albums.artist,
                 albums.image_path,
                 albums.created_at,
+                albums.released_at,
                 ROUND(AVG(reviews.rating), 1) AS average_rating,
                 COUNT(reviews.id) AS review_count
             FROM albums
