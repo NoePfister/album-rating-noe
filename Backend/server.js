@@ -98,6 +98,8 @@ function seedDatabase() {
 
         insertUser.run("Nina");
         insertUser.run("Luca");
+        insertUser.run("Suprien");
+        insertUser.run("Adam");
 
         console.log("✅ Dummy-User wurden eingefügt.");
     }
@@ -147,6 +149,13 @@ function seedDatabase() {
             "/images/brat.png",
             "2026-08-05 10:00:00"
         );
+
+        insertAlbum.run(
+            "Blue Island",
+            "Ravyn Lenae",
+            "/images/1842519-blue-island_160551.jpg",
+            "2026-08-05 10:00:00"
+        )
 
         console.log("✅ Beispielalben wurden eingefügt.");
     }
@@ -232,6 +241,12 @@ function seedDatabase() {
                 2,
                 3,
                 "Nicht mein typisches Genre, aber dennoch eine gute Produktion.",
+                "2026-08-05 12:30:00"
+            ], [
+                5,
+                3,
+                3,
+                "#######################",
                 "2026-08-05 12:30:00"
             ]
         ];
@@ -387,6 +402,46 @@ app.get("/api/debug", (req, res) => {
         message: "Server läuft erfolgreich."
     });
 
+});
+
+app.get("/api/users", (req, res) => {
+
+    const users = db.prepare(`
+        SELECT username, id FROM users ORDER BY username
+        
+        `).all();
+    res.json({
+        message: [...users]
+    })
+});
+
+app.get("/api/users/:id/reviews", (req, res) => {
+    const id = req.params.id;
+    const reviews = db.prepare(`
+        SELECT
+                reviews.id,
+                reviews.rating,
+                reviews.review_text,
+                reviews.created_at,
+                users.id AS user_id,
+                users.username,
+                albums.id AS album_id,
+                albums.title AS album_title,
+                albums.artist,
+                albums.image_path
+            FROM reviews
+            JOIN users
+                ON reviews.user_id = users.id
+            JOIN albums
+                ON reviews.album_id = albums.id
+            WHERE users.id = ?
+            ORDER BY reviews.created_at DESC
+            LIMIT 10
+        
+        `).all(id);
+    res.json({
+        message: [...reviews]
+    })
 });
 
 // ------------------------------------------------------------
