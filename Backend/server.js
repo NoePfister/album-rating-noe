@@ -325,6 +325,7 @@ app.get("/api/albums/:id", (req, res) => {
                 albums.artist,
                 albums.image_path,
                 albums.created_at,
+                albums.released_at,
                 ROUND(AVG(reviews.rating), 1) AS average_rating,
                 COUNT(reviews.id) AS review_count
             FROM albums
