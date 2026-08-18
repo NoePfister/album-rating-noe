@@ -114,6 +114,43 @@ async function loadUsers() {
 
 }
 
+async function loadAlbums() {
+    const response = await fetch("/api/albums");
+    const albums = await response.json();
+
+    // Sehr hilfreich zum Untersuchen in den DevTools:
+    console.log("albums vom Backend:", albums);
+
+    albumsList.innerHTML = "";
+
+    for (const album of albums) {
+
+
+        albumsList.innerHTML += `
+            <article class="album-card">
+
+            
+                <img class="album-cover" src="${album.image_path}" alt="Album Cover">
+
+            
+            <div class="horiz">
+            <div>
+                <div class="album-title">${album.title}</div>
+                <div class="album-artist">${album.artist}</div>
+                <div class="stars">${createStars(album.average_rating)}</div>
+            </div>
+            <div class="release-date">Release: ${album.release_date}</div>
+            </div>
+
+
+
+
+            </article>
+        `;
+    }
+
+}
+
 
 // ------------------------------------------------------------
 // Navigation
@@ -127,6 +164,7 @@ reviewsButton.addEventListener("click", () => {
 
 albumsButton.addEventListener("click", () => {
     showPage(albumsPage, albumsButton);
+    loadAlbums();
 });
 
 usersButton.addEventListener("click", () => {

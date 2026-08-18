@@ -239,6 +239,47 @@ h1 {
     align-items: center;
 }
 
+.album-card {
+    width: 100%;
+    background-color: #cececd;
+    padding: 20px;
+
+
+    border-radius: 30px;
+
+    display: flex;
+
+    align-items: center;
+}
+
+.horiz {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.album-card .album-cover {
+    width: 170px;
+    margin-right: 20px;
+    border-radius: 10px;
+}
+
+.album-title {
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.album-artist {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.release-date {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
 
 /* ------------------------------------------------------------
    Responsive Design
