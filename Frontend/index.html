@@ -1,8 +1,72 @@
-<h1>Album-Rating Plattform wird bald erstellt</h1>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Album Rating</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
 
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <div>
+                <p class="eyebrow">Album Rating</p>
+                <h1 id="page-title">Albumhub</h1>
+            </div>
 
-<div id="albums"></div>
+            <nav class="navigation">
+                <button id="reviews-button" class="nav-button active">Reviews</button>
+                <button id="albums-button" class="nav-button">Alben</button>
+                <button id="users-button" class="nav-button">Users</button>
+            </nav>
+        </div>
+    </header>
 
+    <main class="page-container">
 
+        <!-- Diese Seite ist beim Start sichtbar. -->
+        <section id="reviews-page">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Community</p>
+                    <h2>Neuste Reviews</h2>
+                </div>
+                <p>Was wurde zuletzt gehört und bewertet?</p>
+            </div>
 
-<script src="script.js"></script>
+            <div id="reviews-list" class="review-list">
+                <!-- Die Reviews werden mit JavaScript eingefügt. -->
+            </div>
+        </section>
+
+        <!-- Diese beiden Seiten sind beim Start verborgen. -->
+        <section id="albums-page" class="hidden">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Library</p>
+                    <h2>Alben</h2>
+                </div>
+                <p>Diese Ansicht wird in einer Übung programmiert.</p>
+            </div>
+
+            <div id="albums-list" class="simple-list"></div>
+        </section>
+
+        <section id="users-page" class="hidden">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Community</p>
+                    <h2>Users</h2>
+                </div>
+                <p>Diese Ansicht wird in einer Übung programmiert.</p>
+            </div>
+
+            <div id="users-list" class="simple-list"></div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
