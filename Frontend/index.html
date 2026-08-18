@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Album Rating</title>
     <link rel="stylesheet" href="styles.css">
+    <title>Albumhub</title>
 </head>
 
 <body>
     <header class="site-header">
         <div class="header-content">
             <div>
-                <p class="eyebrow">Album Rating</p>
+                <p class="eyebrow">Rate your album</p>
                 <h1 id="page-title">Albumhub</h1>
             </div>
 
@@ -19,6 +20,7 @@
                 <button id="reviews-button" class="nav-button active">Reviews</button>
                 <button id="albums-button" class="nav-button">Alben</button>
                 <button id="users-button" class="nav-button">Users</button>
+                <button id="new-releases-button" class="nav-button">New Releases</button>
             </nav>
         </div>
     </header>
@@ -29,10 +31,10 @@
         <section id="reviews-page">
             <div class="section-heading">
                 <div>
-                    <p class="eyebrow">Community</p>
+                    <p class="eyebrow">Von der Community</p>
                     <h2>Neuste Reviews</h2>
                 </div>
-                <p>Was wurde zuletzt gehört und bewertet?</p>
+                <p>Was wurde zuletzt bewertet?</p>
             </div>
 
             <div id="reviews-list" class="review-list">
@@ -59,7 +61,6 @@
                     <p class="eyebrow">Community</p>
                     <h2>Users</h2>
                 </div>
-                <p>Diese Ansicht wird in einer Übung programmiert.</p>
             </div>
 
             <div id="users-list" class="simple-list"></div>
@@ -69,4 +70,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

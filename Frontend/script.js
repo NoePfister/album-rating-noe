@@ -69,9 +69,7 @@ async function loadReviews() {
         reviewsList.innerHTML += `
             <article class="review-card">
 
-                <div class="cover-placeholder">
-                    <p>Album Cover wird später hinzugefügt</p>
-                </div>
+                <img class="album-cover" src="${review.image_path}" alt="Album Cover">
 
                 <div class="review-content">
                     <p class="artist-name">${review.artist}</p>
@@ -88,6 +86,32 @@ async function loadReviews() {
             </article>
         `;
     }
+}
+
+async function loadUsers() {
+    const response = await fetch("/api/users");
+    const users = await response.json();
+
+    // Sehr hilfreich zum Untersuchen in den DevTools:
+    console.log("users vom Backend:", users);
+
+    usersList.innerHTML = "";
+
+    for (const user of users) {
+
+
+        usersList.innerHTML += `
+            <article class="user-card">
+
+                <div>${user.username}</div>
+                <div>ID: ${user.id}</div>
+                
+
+
+            </article>
+        `;
+    }
+
 }
 
 
@@ -107,6 +131,7 @@ albumsButton.addEventListener("click", () => {
 
 usersButton.addEventListener("click", () => {
     showPage(usersPage, usersButton);
+    loadUsers();
 });
 
 
