@@ -96,6 +96,10 @@ h1 {
     font-weight: bold;
 }
 
+.album-button {
+    margin-bottom: 20;
+}
+
 
 /* ------------------------------------------------------------
    Seiten / Sections
@@ -118,7 +122,7 @@ h1 {
     font-size: 30px;
 }
 
-.section-heading > p {
+.section-heading>p {
     margin-bottom: 3px;
     color: #6b6b63;
 }
@@ -152,6 +156,16 @@ h1 {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
+.review-card-album {
+    margin-top: 20px;
+    background-color: #a8a8a8;
+    padding: 7px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #333333;
+    border-radius: 10px;
+}
+
 .cover-placeholder {
     aspect-ratio: 1 / 1;
     display: grid;
@@ -162,6 +176,7 @@ h1 {
 
     color: #77776f;
 }
+
 .album-cover {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -169,9 +184,17 @@ h1 {
     display: block;
 }
 
+.album-card {
+    cursor: pointer;
+}
+
+
+
 .review-content {
     align-self: center;
 }
+
+
 
 .artist-name {
     margin-bottom: 6px;
