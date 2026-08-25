@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>Albumhub</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <header class="site-header">
         <div class="header-content">
             <div>
-                <p class="eyebrow">Rate your album</p>
+                <p class="eyebrow">Rate your Albums</p>
                 <h1 id="page-title">Albumhub</h1>
             </div>
 
@@ -51,7 +50,9 @@
                 </div>
             </div>
 
-            <input class="album-card album-search" type="text" id="album-search" placeholder="Album suchen...">
+            <div class="search-container">
+                <input type="text" id="album-search" class="input" placeholder="Suche nach Album oder Künstler...">
+            </div>
 
             <div id="albums-list" class="simple-list"></div>
         </section>
@@ -71,5 +72,4 @@
 
     <script src="script.js"></script>
 </body>
-
 </html>

@@ -14,7 +14,8 @@ const reviewsList = document.querySelector("#reviews-list");
 const albumsList = document.querySelector("#albums-list");
 const usersList = document.querySelector("#users-list");
 
-const albumSearch = document.querySelector("#album-search")
+let allAlbums = []; // Variable, um alle Alben zu speichern
+const albumSearchInput = document.querySelector("#album-search");
 
 
 // ------------------------------------------------------------
@@ -22,8 +23,10 @@ const albumSearch = document.querySelector("#album-search")
 // ------------------------------------------------------------
 
 function createStars(rating) {
-    const fullStars = "★".repeat(rating);
-    const emptyStars = "☆".repeat(5 - rating);
+    const roundedRating = Math.round(rating);
+
+    const fullStars = "★".repeat(roundedRating);
+    const emptyStars = "☆".repeat(5 - roundedRating);
 
     return fullStars + emptyStars;
 }
@@ -55,19 +58,11 @@ async function loadReviews() {
     const response = await fetch("/api/reviews/latest");
     const reviews = await response.json();
 
-    // Sehr hilfreich zum Untersuchen in den DevTools:
-    console.log("Reviews vom Backend:", reviews);
-
     reviewsList.innerHTML = "";
 
     for (const review of reviews) {
 
-        /*
-            Das Cover ist ABSICHTLICH noch nicht eingebaut.
-            In einer späteren Übung wird image_path vom Backend
-            bis zu diesem HTML-Element verfolgt.
-        */
-
+        review.image_path = review.image_path;
         reviewsList.innerHTML += `
             <article class="review-card">
 
@@ -90,79 +85,60 @@ async function loadReviews() {
     }
 }
 
+// ------------------------------------------------------------
+// Users laden
+// ------------------------------------------------------------
+
 async function loadUsers() {
     const response = await fetch("/api/users");
     const users = await response.json();
-
-    // Sehr hilfreich zum Untersuchen in den DevTools:
-    console.log("users vom Backend:", users);
 
     usersList.innerHTML = "";
 
     for (const user of users) {
 
-
         usersList.innerHTML += `
             <article class="user-card">
-
-                <div>${user.username}</div>
-                <div>ID: ${user.id}</div>
-                
-
-
+                <h3 class="username">@${user.username}</h3>
             </article>
         `;
     }
+}   
 
-}
+// ------------------------------------------------------------
+// Albums laden
+// ------------------------------------------------------------
 
-let albums = []
-
-async function getAlbums() {
+async function loadAlbums() {
     const response = await fetch("/api/albums");
-    albums = await response.json();
-}
+    allAlbums = await response.json();
 
-function loadAlbums(search_string) {
+    displayAlbums(allAlbums);    
+} 
 
-    if (!search_string) { search_string = ""; }
-
-    console.log("SEARCH: " + search_string);
-
-
-    albumsList.innerHTML = "";
+function displayAlbums(albums) {
+    albumsList.innerHTML = ""; 
 
     for (const album of albums) {
 
-        if (search_string != "") {
-
-            if (!album.title.toLowerCase().includes(search_string.toLowerCase())) {
-                if (!album.artist.toLowerCase().includes(search_string.toLowerCase())) {
-                    continue;
-                }
-            }
-        }
-
-
-
         albumsList.innerHTML += `
-            <article class="album-card">
+             <article class="review-card">
 
-            
                 <img class="album-cover" src="${album.image_path}" alt="Album Cover">
 
-            
-            <div class="horiz">
-            <div>
-                <div class="album-title">${album.title}</div>
-                <div class="album-artist">${album.artist}</div>
-                <div class="stars">${createStars(album.average_rating)}</div>
-            </div>
-            <div class="release-date">Release: ${album.release_date}</div>
-            </div>
+                <div class="review-content">
+                    <p class="artist-name">${album.artist}</p>
+                    <h3 class="album-title">${album.title}</h3>
 
+                    <div class="rating-row">
+                        <span class="stars">${createStars(album.average_rating)}</span>
+                        <span>${album.average_rating} / 5</span>
+                    </div>
 
+                    
 
+                    <p class="review-text">${album.release_date}</p>
+                </div>
 
             </article>
         `;
@@ -170,7 +146,32 @@ function loadAlbums(search_string) {
 
 }
 
-getAlbums();
+// ------------------------------------------------------------
+// Album-Suche EventListener
+// ------------------------------------------------------------
+
+albumSearchInput.addEventListener("input", async () => {
+    const searchTerm = albumSearchInput.value.trim();
+
+    if (searchTerm === "") {
+        displayAlbums(allAlbums);
+        return;
+    }
+
+    if (allAlbums.length === 0) {
+        await loadAlbums();
+    }
+
+    const albums = allAlbums.filter(album => 
+        album.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        album.artist.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    displayAlbums(albums);
+});
+
+
+
 
 // ------------------------------------------------------------
 // Navigation
@@ -190,10 +191,6 @@ albumsButton.addEventListener("click", () => {
 usersButton.addEventListener("click", () => {
     showPage(usersPage, usersButton);
     loadUsers();
-});
-
-albumSearch.addEventListener("input", () => {
-    loadAlbums(albumSearch.value);
 });
 
 
