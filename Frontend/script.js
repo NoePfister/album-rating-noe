@@ -14,6 +14,8 @@ const reviewsList = document.querySelector("#reviews-list");
 const albumsList = document.querySelector("#albums-list");
 const usersList = document.querySelector("#users-list");
 
+const albumSearch = document.querySelector("#album-search")
+
 
 // ------------------------------------------------------------
 // Hilfsfunktionen
@@ -114,16 +116,33 @@ async function loadUsers() {
 
 }
 
-async function loadAlbums() {
-    const response = await fetch("/api/albums");
-    const albums = await response.json();
+let albums = []
 
-    // Sehr hilfreich zum Untersuchen in den DevTools:
-    console.log("albums vom Backend:", albums);
+async function getAlbums() {
+    const response = await fetch("/api/albums");
+    albums = await response.json();
+}
+
+function loadAlbums(search_string) {
+
+    if (!search_string) { search_string = ""; }
+
+    console.log("SEARCH: " + search_string);
+
 
     albumsList.innerHTML = "";
 
     for (const album of albums) {
+
+        if (search_string != "") {
+
+            if (!album.title.toLowerCase().includes(search_string.toLowerCase())) {
+                if (!album.artist.toLowerCase().includes(search_string.toLowerCase())) {
+                    continue;
+                }
+            }
+        }
+
 
 
         albumsList.innerHTML += `
@@ -151,6 +170,7 @@ async function loadAlbums() {
 
 }
 
+getAlbums();
 
 // ------------------------------------------------------------
 // Navigation
@@ -170,6 +190,10 @@ albumsButton.addEventListener("click", () => {
 usersButton.addEventListener("click", () => {
     showPage(usersPage, usersButton);
     loadUsers();
+});
+
+albumSearch.addEventListener("input", () => {
+    loadAlbums(albumSearch.value);
 });
 
 

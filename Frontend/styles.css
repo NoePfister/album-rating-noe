@@ -252,6 +252,11 @@ h1 {
     align-items: center;
 }
 
+.album-search {
+    margin-bottom: 20px;
+    font-size: larger;
+}
+
 .horiz {
     flex: 1;
     display: flex;
