@@ -6,6 +6,7 @@ const reviewsButton = document.querySelector("#reviews-button");
 const albumsButton = document.querySelector("#albums-button");
 const usersButton = document.querySelector("#users-button");
 let albumButton = document.querySelector("#album-button");
+let createReviewButton = document.querySelector("#create-review-button");
 
 const reviewsPage = document.querySelector("#reviews-page");
 const albumsPage = document.querySelector("#albums-page");
@@ -197,18 +198,58 @@ async function loadAlbum(albumId) {
 
             </article>
 
+            <button id="create-review-button" class=" nav-button active album-button">Create Review</button>
+
+
             <div id="album-list" class="simple-list"></div>
     
     `;
 
     albumList = document.querySelector("#album-list");
     albumButton = document.querySelector("#album-button");
+    createReviewButton = document.querySelector("#create-review-button");
+
     albumButton.addEventListener("click", () => {
         showPage(albumsPage, albumsButton);
         loadAlbums();
     });
     console.log(albumButton);
 
+    createReviewButton.addEventListener("click", () => {
+        console.log("review create");
+        createReviewButton.classList.add("hidden");
+
+        albumList.innerHTML = `
+        <form id="submit-review-button" class="create-review-form">
+            <span class="form-text">Bewertung (1-5):</span>
+            <input required type="number" min="1" max="5"> <br>
+            <span class="form-text">Rezension: </span>
+            <input required type="text"> <br>
+            <span class="form-text">Benutzername: </span>
+            <select required>
+                <option>Luca</option>
+                <option>Nina</option>
+                <option>Mia</option>
+            </select> <br>
+            <input class="review-submit-button" type="submit" value="Erstellen">
+            
+        </form>
+        
+        ` + albumList.innerHTML;
+
+        const submitReviewButton = document.querySelector("#submit-review-button");
+
+        submitReviewButton.addEventListener("submit", (ev) => {
+            console.log("submit")
+            ev.preventDefault();
+            let stars = ev.target[0].value;
+            let review = ev.target[1].value;
+            let username = ev.target[2].value;
+
+            console.log(stars, review, username);
+        });
+
+    });
 
 
     for (review of album.reviews) {
